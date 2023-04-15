@@ -1,13 +1,24 @@
-header {
+.cabecario {
   position: fixed;
-  top: 0;
   width: 100%;
-  background-color: #eee;
-  padding: 10px;
+  background-color: #180a23;
+  padding: 40px;
   text-align: center;
+  z-index: 1; /* sobrepondo o cabeçario acima da cena 3d */
+}
+.cabecario a {
+  background-color: #28212f;
+  margin: 20px 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  color: #8326CC;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 #canvas-container {
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: 0;
 }
