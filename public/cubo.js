@@ -2,6 +2,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Stats from "three/examples/jsm/libs/stats.module";
+import * as dat from "https://cdn.jsdelivr.net/npm/dat.gui@0.7.7/build/dat.gui.module.js";
 
 // estrutura
 const scene = new THREE.Scene();
@@ -18,6 +19,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 renderer.setClearColor(0x25282a); // cor do fundo
+
 // eixos
 //const axes = new THREE.AxesHelper(10);
 //scene.add(axes);
@@ -122,12 +124,38 @@ const stats = Stats();
 document.body.appendChild(stats.dom);
 
 // controle de veloci
-const control = new (function () {
-  this.veloci = 0;
-})();
-const gui = new dat.GUI();
+
+const gui = new dat.GUI({ autoplace: false, width: 300 });
+gui.domElement.style.position = "fixed";
+gui.domElement.style.width = "300px";
+gui.domElement.style.top = "25%";
+gui.domElement.style.right = "0";
+gui.domElement.style.transform = "translateY(-50%)";
+document.body.appendChild(gui.domElement);
+const control = {
+  veloci: 0,
+};
 gui.add(control, "veloci", 0, 0.815);
-(function (event) {});
+
+// sistema de cores
+const cores = {
+  vermelho: materialVermelho.color.getHex(),
+  azul: materialAzul.color.getHex(),
+  branco: materialBranco.color.getHex(),
+  vinho: materialVinho.color.getHex(),
+};
+gui.addColor(cores, "vermelho").onChange(() => {
+  materialVermelho.color.set(cores.vermelho);
+});
+gui.addColor(cores, "azul").onChange(() => {
+  materialAzul.color.set(cores.azul);
+});
+gui.addColor(cores, "branco").onChange(() => {
+  materialBranco.color.set(cores.branco);
+});
+gui.addColor(cores, "vinho").onChange(() => {
+  materialVinho.color.set(cores.vinho);
+});
 
 // animação
 function animate() {
