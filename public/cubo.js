@@ -18,7 +18,7 @@ camera.lookAt(scene.position);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-renderer.setClearColor(0x25282a); // cor do fundo
+renderer.setClearColor(0x180a23);
 
 // eixos
 //const axes = new THREE.AxesHelper(10);
@@ -34,11 +34,26 @@ function criaCubo(material) {
   return cubo;
 }
 
-//material
-const materialVermelho = new THREE.MeshBasicMaterial({ color: 0xc40054 });
-const materialAzul = new THREE.MeshBasicMaterial({ color: 0x00788f });
-const materialBranco = new THREE.MeshBasicMaterial({ color: 0xfff7f7 });
-const materialVinho = new THREE.MeshBasicMaterial({ color: 0x8f0e46 });
+//luz
+const light = new THREE.PointLight(0x00ffff, 0, 1, 0);
+light.position.set(0, 5, 0);
+scene.add(light);
+//cores
+//const materialVermelho = new THREE.MeshBasicMaterial({ color: 0xc40054 });
+//const materialAzul = new THREE.MeshBasicMaterial({ color: 0x00788f });
+//const materialBranco = new THREE.MeshBasicMaterial({ color: 0xfff7f7 });
+//const materialVinho = new THREE.MeshBasicMaterial({ color: 0x8f0e46 });
+
+const textureVermelho = new THREE.TextureLoader().load("/texturas/t1 (10).jpg");
+const textureAzul = new THREE.TextureLoader().load("/texturas/t1 (1).jpg");
+const textureBranco = new THREE.TextureLoader().load("/texturas/t1 (8).jpg");
+const textureVinho = new THREE.TextureLoader().load("/texturas/t1 (7).jpg");
+
+// criação dos materiais com as texturas
+const materialVermelho = new THREE.MeshBasicMaterial({ map: textureVermelho });
+const materialAzul = new THREE.MeshBasicMaterial({ map: textureAzul });
+const materialBranco = new THREE.MeshBasicMaterial({ map: textureBranco });
+const materialVinho = new THREE.MeshBasicMaterial({ map: textureVinho });
 
 //criação dos cubos
 const cubo = criaCubo(materialBranco);
@@ -136,26 +151,6 @@ const control = {
   veloci: 0,
 };
 gui.add(control, "veloci", 0, 0.815);
-
-// sistema de cores
-const cores = {
-  vermelho: materialVermelho.color.getHex(),
-  azul: materialAzul.color.getHex(),
-  branco: materialBranco.color.getHex(),
-  vinho: materialVinho.color.getHex(),
-};
-gui.addColor(cores, "vermelho").onChange(() => {
-  materialVermelho.color.set(cores.vermelho);
-});
-gui.addColor(cores, "azul").onChange(() => {
-  materialAzul.color.set(cores.azul);
-});
-gui.addColor(cores, "branco").onChange(() => {
-  materialBranco.color.set(cores.branco);
-});
-gui.addColor(cores, "vinho").onChange(() => {
-  materialVinho.color.set(cores.vinho);
-});
 
 // animação
 function animate() {
